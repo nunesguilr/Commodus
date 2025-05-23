@@ -1,22 +1,24 @@
-# Byte-code files
+# Byte-code files (Python cache)
 *.pyc
 __pycache__/
 
-# Virtual environment
+# Virtual environments
 .venv/
 venv/
 env/
-.env/
 
-# IDE-specific files
+# Environment variables
+.env
+.flaskenv
+
+# IDE-specific settings
 .idea/                  # PyCharm / IntelliJ IDEA
 .vscode/                # VS Code
-*.sublime-project       # Sublime Text
-*.sublime-workspace
+*.sublime-*             # Sublime Text
 *.komodoproject         # Komodo IDE
 *.kpf                   # Komodo IDE
 
-# Operating System files
+# OS-specific files
 .DS_Store               # macOS
 Thumbs.db               # Windows
 ehthumbs.db             # Windows
@@ -28,13 +30,9 @@ Desktop.ini             # Windows
 *.db
 
 # Data files (generated or downloaded)
-/data_cache/            # Diretório de cache de dados
-commodities.csv         # Se este arquivo CSV for gerado ou baixado e não for parte do código-fonte
-*.json                  # Se houver outros arquivos JSON gerados que não devem ser versionados
-
-# Environment variables
-.env                    # Arquivo de variáveis de ambiente
-.flaskenv               # Flask-specific environment file
+data_cache/             # Diretório de cache de dados
+commodities.csv         # Se este arquivo CSV for gerado ou baixado
+*.json                  # Outros arquivos JSON gerados
 
 # Python build artifacts
 dist/
@@ -42,14 +40,16 @@ build/
 *.egg-info/
 .tox/
 
-# Test and coverage
+# Test and coverage reports
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Jupyter Notebook files (if applicable)
+# Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
-# Miscellaneous
+# Temporary files
 *.bak
 *.swp
+*.tmp
+*.cache
