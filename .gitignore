@@ -1,0 +1,55 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+.venv/
+venv/
+env/
+.env/
+
+# IDE-specific files
+.idea/                  # PyCharm / IntelliJ IDEA
+.vscode/                # VS Code
+*.sublime-project       # Sublime Text
+*.sublime-workspace
+*.komodoproject         # Komodo IDE
+*.kpf                   # Komodo IDE
+
+# Operating System files
+.DS_Store               # macOS
+Thumbs.db               # Windows
+ehthumbs.db             # Windows
+Desktop.ini             # Windows
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Data files (generated or downloaded)
+/data_cache/            # Diretório de cache de dados
+commodities.csv         # Se este arquivo CSV for gerado ou baixado e não for parte do código-fonte
+*.json                  # Se houver outros arquivos JSON gerados que não devem ser versionados
+
+# Environment variables
+.env                    # Arquivo de variáveis de ambiente
+.flaskenv               # Flask-specific environment file
+
+# Python build artifacts
+dist/
+build/
+*.egg-info/
+.tox/
+
+# Test and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter Notebook files (if applicable)
+.ipynb_checkpoints
+
+# Miscellaneous
+*.bak
+*.swp
