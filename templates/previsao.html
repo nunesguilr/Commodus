@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commodus – Inteligência para Previsão de Commodities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #020617;
+        }
+
+        #grafico-container {
+            height: 100%;
+            min-height: 200px;
+        }
+
+        .confidence-meter {
+            width: 100%;
+            height: 20px;
+            background-color: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .confidence-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .ai-analysis {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .ai-analysis::before {
+            content: "🤖 IA";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #3b82f6;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="text-white p-4 md:p-8">
+    <div class="container mx-auto p-6 md:p-8 bg-gray-900 rounded-2xl shadow-xl max-w-6xl" id="conteudo-pdf">
+        <!-- Cabeçalho com logo e título -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+            <img src="/static/logo-g.svg" alt="Commodus Logo" class="h-12 md:h-16">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-400 text-center">
+                🔮 Previsão de Preço - <span class="text-blue-300">{{ nome }}</span>
+            </h1>
+            <div class="w-12 md:w-16"></div> <!-- Espaçador para alinhamento -->
+        </div>
+
+        <!-- Gráfico principal -->
+        <div class="mb-12">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-200">Gráfico de Previsão</h2>
+            </div>
+            <div id="grafico-container" class="rounded-xl bg-gray-800 p-4 shadow-inner">
+                {{ grafico_html|safe }}
+            </div>
+        </div>
+
+        <!-- Cards de informações -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Card de Resultados -->
+            <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-200 mb-4 flex items-center">
+                    <span class="mr-2">📊</span> Resultado da Previsão
+                </h2>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex justify-between">
+                        <strong>Preço Atual:</strong>
+                        <span class="font-mono">USD {{ resultado.preco_atual|round(2) }}</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <strong>Previsão Amanhã:</strong>
+                        <span class="font-mono text-blue-300">USD {{ resultado.previsao_amanha|round(2) }}</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <strong>Margem de Erro (RMSE):</strong>
+                        <span class="font-mono">{{ resultado.rmse|round(4) }}</span>
+                    </li>
+                    <li>
+                        <div class="flex justify-between mb-1">
+                            <strong>Confiança do Modelo:</strong>
+                            <span class="font-mono">{{ (resultado.acuracia * 100)|round(2) }}%</span>
+                        </div>
+                        <div class="confidence-meter">
+                            {% set acuracia_percent = (resultado.acuracia * 100 if resultado.acuracia <= 1 else
+                                resultado.acuracia)|round(2) %} {% set acuracia_percent=[acuracia_percent, 100]|min %}
+                                <div class="confidence-level" style="width: {{ acuracia_percent }}%">
+                        </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-1 flex justify-between">
+                <span>Baixa</span>
+                <span>Média</span>
+                <span>Alta</span>
+            </div>
+            </li>
+            </ul>
+        </div>
+
+        <!-- Card de Notícias -->
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+            <h2 class="text-xl md:text-2xl font-semibold text-gray-200 mb-4 flex items-center">
+                <span class="mr-2">📰</span> Notícias Recentes - {{ nome }}
+            </h2>
+            {% if noticias is iterable %}
+            <ul class="space-y-3 max-h-64 overflow-y-auto pr-2">
+                {% for noticia in noticias %}
+                <li class="pb-2 border-b border-gray-700 last:border-b-0">
+                    <a href="{{ noticia.link }}" target="_blank" rel="noopener noreferrer"
+                        class="text-blue-400 hover:text-blue-300 hover:underline flex items-start">
+                        <span class="mr-2">🔗</span>
+                        <span>{{ noticia.titulo }}</span>
+                    </a>
+                    <span class="text-xs text-gray-500 block mt-1">{{ noticia.fonte }} - {{ noticia.data }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-gray-400 italic">{{ noticias.mensagem }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Análise do Especialista -->
+    <div class="ai-analysis mb-12 shadow-lg">
+        <h2 class="text-xl md:text-2xl font-semibold text-gray-200 mb-4">Análise de Mercado</h2>
+        <div class="text-gray-300 space-y-4">
+            <div class="flex items-start">
+                <span class="text-yellow-400 mr-2">💡</span>
+                <div class="prose prose-invert max-w-none text-gray-300">
+                    {{ analise_gemini|safe }}
+                </div>
+            </div>
+            <div class="flex items-start">
+                <span class="text-blue-400 mr-2">📈</span>
+                <p>Baseado nos dados históricos e nas notícias recentes, nosso modelo indica
+                    {% if resultado.previsao_amanha > resultado.preco_atual %}
+                    <span class="text-green-400">uma tendência de alta</span> para amanhã.
+                    {% else %}
+                    <span class="text-red-400">uma tendência de baixa</span> para amanhã.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="text-center flex flex-col md:flex-row justify-center gap-4 mt-8">
+        <a href="/"
+            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white text-lg font-semibold rounded-full shadow-lg hover:from-blue-700 hover:to-blue-600 transition duration-300">
+            <span class="mr-2">⬅️</span> Voltar para a Página Inicial
+        </a>
+        <button onclick="baixarRelatorioTXT()"
+            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold rounded-full shadow-lg hover:from-green-700 hover:to-green-600 transition duration-300">
+            <span class="mr-2">📄</span> Baixar Relatório
+        </button>
+    </div>
+
+    <script>
+        function baixarRelatorioTXT() {
+            const precoAtual = "{{ resultado.preco_atual|round(2) }}";
+            const previsaoAmanha = "{{ resultado.previsao_amanha|round(2) }}";
+            const rmse = "{{ resultado.rmse|round(4) }}";
+            const acuracia = "{{ (resultado.acuracia * 100)|round(2) }}%";
+            const analiseIA = `{{ analise_gemini|striptags|replace('\n', ' ')|replace('\r', '') }}`;
+            const tendencia = "{{ 'Alta' if resultado.previsao_amanha > resultado.preco_atual else 'Baixa' }}";
+            const nome = "{{ nome }}";
+
+            const conteudo = `
+COMMODUS - Relatório de Previsão de Commodities
+
+🧾 Dados do Modelo - ${nome}:
+----------------------------
+Preço Atual: USD ${precoAtual}
+Previsão para Amanhã: USD ${previsaoAmanha}
+Margem de Erro (RMSE): ${rmse}
+Confiança do Modelo: ${acuracia}
+Tendência Prevista: ${tendencia}
+
+🤖 Análise da IA:
+----------------------------
+${analiseIA}
+        `;
+
+            const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'relatorio_previsao.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+    </div>
+</body>
+
+</html>
