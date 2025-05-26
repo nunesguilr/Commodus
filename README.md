@@ -12,7 +12,6 @@ Comodus é uma aplicação web desenvolvida em **Flask** que oferece:
 
 A plataforma é **intuitiva**, com foco em auxiliar na compreensão das tendências do mercado.
 
----
 
 ## ⚙️ Funcionalidades
 
@@ -24,7 +23,6 @@ A plataforma é **intuitiva**, com foco em auxiliar na compreensão das tendênc
 * 🔍 **Autocompletar:** Busca com sugestões automáticas.
 * ⚡ **Cache de Dados:** Otimiza desempenho e reduz carregamento.
 
----
 
 ## 🗂️ Estrutura do Projeto
 
@@ -49,7 +47,6 @@ A plataforma é **intuitiva**, com foco em auxiliar na compreensão das tendênc
 └── requirements.txt        # Dependências Python
 ```
 
----
 
 ## 🚀 Configuração e Execução
 
@@ -108,7 +105,6 @@ python app.py
 
 Acesse: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 
----
 
 ## 🖥️ Uso
 
@@ -121,7 +117,6 @@ Acesse: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
   * 🧠 Análise de mercado por IA
   * 🗞️ Notícias recentes
 
----
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -135,7 +130,6 @@ Acesse: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 * **Fontes:** Google Fonts (Montserrat)
 * **Ícones:** Font Awesome
 
----
 
 ## 🚧 Melhorias Futuras
 
@@ -147,7 +141,6 @@ Acesse: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 * 🌍 Suporte a múltiplos idiomas
 * 🖼️ Dashboard personalizável
 
----
 
 ## 👥 Contribuidores
 
@@ -155,6 +148,5 @@ Acesse: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 * **\[Eduardo Guimarães]** — Colaborador
 * **\[Yasmin Schultz]** — Colaborador
 
----
 
 ✨ **Comodus** — Previsão inteligente e análise de commodities.
