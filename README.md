@@ -60,7 +60,7 @@ A plataforma é **intuitiva**, com foco em auxiliar na compreensão das tendênc
 1️⃣ **Clonar o Repositório**
 
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
+git clone https://github.com/nunesguilr/Commodus.git
 cd comodus
 ```
 
